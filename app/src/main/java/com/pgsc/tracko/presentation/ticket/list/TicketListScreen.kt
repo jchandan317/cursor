@@ -29,7 +29,6 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -89,10 +88,7 @@ fun TicketListScreen(
                 onStatusSelected = { viewModel.setStatusFilter(it) },
                 onCategorySelected = { viewModel.setCategoryFilter(it) }
             )
-            PullToRefreshBox(
-                isRefreshing = pagingItems.loadState.refresh is androidx.paging.LoadState.Loading && pagingItems.itemCount == 0,
-                onRefresh = { viewModel.refresh() }
-            ) {
+            Box(Modifier.fillMaxSize()) {
                 when (val refresh = pagingItems.loadState.refresh) {
                     is androidx.paging.LoadState.Loading -> {
                         if (pagingItems.itemCount == 0) {
@@ -134,6 +130,7 @@ fun TicketListScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FilterChipsRow(
     currentFilter: TicketFilter?,
@@ -246,6 +243,7 @@ private fun TicketListContent(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TicketCard(
     ticket: Ticket,
